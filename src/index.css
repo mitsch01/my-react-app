@@ -4,6 +4,3 @@
 
 html, body, #root { height: 100%; }
 body { font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; }
-
-/* basic utilities for layout */
-.container { @apply max-w-6xl mx-auto px-6; }

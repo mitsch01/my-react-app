@@ -1,16 +1,57 @@
 import { motion } from 'framer-motion'
 
-export default function HeroSection({title, subtitle, image}){
+export default function HeroSection({ title, subtitle, image }) {
+  // Fallbacks
+  const fallbackImg = '/images/hero_maedchen2024.jpg'
+  const fallbackTitle = 'Illustrationen & Projekte'
+  const fallbackSubtitle = 'Eine Auswahl meiner Arbeiten. Workshops und mehr.'
+
+  // Image resolution logic
+  const heroImg =
+    image?.data?.attributes?.formats?.large?.url ||
+    image?.data?.attributes?.url ||
+    fallbackImg
+
+  // Optional Strapi base URL (only applied if defined)
+  const baseUrl = import.meta.env.VITE_STRAPI_URL
+  const fullImageUrl =
+    heroImg.startsWith('http') || !baseUrl
+      ? heroImg
+      : `${baseUrl}${heroImg}`
+
+  // Text fallbacks
+  const heroTitle = title?.trim() || fallbackTitle
+  const heroSubtitle = subtitle?.trim() || fallbackSubtitle
+
   return (
     <section className="relative">
-      <div className="container grid grid-cols-1 md:grid-cols-2 gap-8 items-center py-20">
-        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
-          <h1 className="text-4xl font-bold mb-4">{title || 'Illustrationen & Projekte'}</h1>
-          <p className="text-lg text-gray-700 max-w-xl">{subtitle || 'Eine Auswahl meiner Arbeiten. Workshops und mehr.'}</p>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        {/* Image */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="w-full"
+        >
+          <img
+            src={fullImageUrl}
+            alt={heroTitle}
+            className="object-cover w-full h-auto"
+          />
         </motion.div>
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="w-full">
-          {/* placeholder for animated illustration */}
-          <div className="bg-gray-100 rounded-lg aspect-[4/3] flex items-center justify-center">Hero Image</div>
+
+        {/* Text */}
+        <motion.div
+          className="px-4"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+        >
+          <h1 className="text-4xl font-bold mb-4">
+            {heroTitle}
+          </h1>
+          <p className="text-lg text-gray-700 max-w-xl">
+            {heroSubtitle}
+          </p>
         </motion.div>
       </div>
     </section>

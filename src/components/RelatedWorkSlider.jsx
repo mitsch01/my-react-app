@@ -1,6 +1,6 @@
-export default function RelatedWorkSlider({items = []}){
+export default function RelatedWorkSlider({ items = [] }) {
   return (
-    <div className="container py-8">
+    <div className=" py-8">
       <h3 className="text-lg font-semibold mb-4">Related Work</h3>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {items.map(it => {
